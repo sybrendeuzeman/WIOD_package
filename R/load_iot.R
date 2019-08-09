@@ -40,7 +40,6 @@
 #' @export
 load_iot <- function(version, year, directory = get("dir_data", envir = paramEnv)){
   dir_file = paste(directory, "\\", version, "\\", version, toString(year), ".rds", sep = "")
-  print(dir_file)
   iot <- readRDS(dir_file)
   return(iot)
 }

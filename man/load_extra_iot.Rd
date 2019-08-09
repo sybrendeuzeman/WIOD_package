@@ -4,7 +4,7 @@
 \alias{load_extra_iot}
 \title{Load extra data.}
 \usage{
-load_extra_iot(iot, extra, directory = WIOD_PARAM$dir_data)
+load_extra_iot(iot, extra, directory = get("dir_data", envir = paramEnv))
 }
 \arguments{
 \item{iot:}{List with elements in a Input-Output Table (load via [load_iot()])}

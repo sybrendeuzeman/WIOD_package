@@ -4,7 +4,8 @@
 \alias{load_iots}
 \title{Load a time-series of International Input-Output Table.}
 \usage{
-load_iots(version_database, years = 8, directory = WIOD_PARAM$dir_data)
+load_iots(version_database, years = 8, directory = get("dir_data",
+  envir = paramEnv))
 }
 \arguments{
 \item{version:}{version of IOTs}
