@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.8.9)  9 AUG 2019 14:26
-=======
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.8.9)  9 AUG 2019 10:31
->>>>>>> f735e5d859ba5ae3846817921bc49efc9098d176
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.8.9)  9 AUG 2019 16:55
 entering extended mode
 **./guide_WIOD_package.tex
 (guide_WIOD_package.tex
@@ -284,7 +280,6 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 
 {C:/Users/Sybren/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-<<<<<<< HEAD
 <content_iot.png, id=10, 639.89063pt x 243.15843pt>
 File: content_iot.png Graphic file (type png)
 <use content_iot.png>
@@ -324,45 +319,6 @@ iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.
 Output written on guide_WIOD_package.pdf (6 pages, 145668 bytes).
 PDF statistics:
  55 PDF objects out of 1000 (max. 8388607)
-=======
-<content_iot.png, id=11, 639.89063pt x 243.15843pt>
-File: content_iot.png Graphic file (type png)
-<use content_iot.png>
-Package pdftex.def Info: content_iot.png  used on input line 48.
-(pdftex.def)             Requested size: 505.89pt x 192.24147pt.
- [2 <./content_iot.png>]
-<content_iot_function.png, id=18, 632.3625pt x 293.59688pt>
-File: content_iot_function.png Graphic file (type png)
-<use content_iot_function.png>
-Package pdftex.def Info: content_iot_function.png  used on input line 93.
-(pdftex.def)             Requested size: 505.89pt x 234.88228pt.
-
-[3] [4 <./content_iot_function.png>] [5] [6] (guide_WIOD_package.aux) ) 
-Here is how much of TeX's memory you used:
- 3419 strings out of 492895
- 46696 string characters out of 3133477
- 122974 words of memory out of 3000000
- 7276 multiletter control sequences out of 15000+200000
- 13988 words of font info for 54 fonts, out of 3000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 41i,8n,31p,715b,326s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Prog
-ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program File
-s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 
-2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/
-type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publ
-ic/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfont
-s/cm/cmr9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss1
-0.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss9.pfb><C:
-/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmssbx10.pfb><C:/Progr
-am Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmssi12.pfb><C:/Program File
-s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Program Files/MiKTeX 2.9/fon
-ts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on guide_WIOD_package.pdf (6 pages, 184422 bytes).
-PDF statistics:
- 75 PDF objects out of 1000 (max. 8388607)
->>>>>>> f735e5d859ba5ae3846817921bc49efc9098d176
  0 named destinations out of 1000 (max. 500000)
  11 words of extra memory for PDF output out of 10000 (max. 10000000)
 
