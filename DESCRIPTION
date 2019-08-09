@@ -1,0 +1,9 @@
+Package: WIOD
+Title: International Input Output Table Package
+Description: 
+Version: 0.1
+Author: Sybren Deuzeman
+Maintainer: GGDC <unknown@unknown.nl>
+Depends: R (>= 3.0.1)
+RoxygenNote: 6.1.1
+Encoding: UTF-8
