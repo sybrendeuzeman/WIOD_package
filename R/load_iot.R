@@ -40,7 +40,28 @@
 #' @export
 load_iot <- function(version, year, directory = get("dir_data", envir = paramEnv)){
   dir_file = paste(directory, "\\", version, "\\", version, toString(year), ".rds", sep = "")
-  iot <- readRDS(dir_file)
+  
+  if (tolower(substr(dir_file, 1, 4)) == 'http' ){
+    if (url.exists(dir_file)){
+      print(dir_file)
+      if (is.na(curl_fetch_memory(dir_file)$type)){
+        #Website redirect wrong URLs without proper code
+        iot <- readRDS(gzcon(url(dir_file)))
+        return(iot)
+      }
+      else{
+        print("Requested data not found")
+      }
+    }
+  }
+  else{
+    if (file.exists(dir_file)){
+      iot <- readRDS(dir_file)
+    }
+    else{
+      print("Requested data not found")
+    }
+  }
   return(iot)
 }
 

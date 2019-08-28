@@ -26,9 +26,17 @@
 #' df_long <- export_dataframe("gii", iots, long = TRUE)
 #' 
 #' @export
-export_dataframe <- function(measures, iots, long = FALSE){
+export_dataframe <- function(measures, iots, years = NULL, long = FALSE){
   # Start empty list to make into dataframe in the end
   df_list = list()
+  
+  if (!is.null(years)){
+    iots_new = list()
+    for (year in years){
+      iots_new[[paste("iot", toString(year), sep = "")]] <- iots[[paste("iot", toString(year), sep = "")]]
+    }
+    iots <- iots_new
+  }
   
   # Find the description of the data
   # Use first element of measures for this.
@@ -37,14 +45,14 @@ export_dataframe <- function(measures, iots, long = FALSE){
   notfound = T
   i = 1
   while (notfound){
-    if (is.null(iots[[i]][[name_descr]])){
-      # if description not in list, add one to counter 
-      i = i + 1
-    }
-    else {
+    if (!is.null(iots[[i]][[name_descr]])){
       # if description found, add description to the list
       descr <- iots[[i]][[name_descr]]
       notfound = F
+    }
+    else {
+      # if description not in list, add one to counter 
+      i = i + 1
     }
     if (i >= length(iots)){
       # Ends loop if all IOTs in list are checked.
@@ -59,17 +67,51 @@ export_dataframe <- function(measures, iots, long = FALSE){
   }
 
   # Go through all measures and years to add the data to the list
-  df_list <- list(descr)
+  if (!is.null(descr)){
+    df_list <- list(descr)  
+  }
+  
   for (measure in measures){
   for (i in 1:length(iots)){
-    # Find year of data and make column name
-    year = iots[[i]]$year 
-    name_col <- paste(measure, toString(year), sep = "")
-    # Add data to list
-    df_list[[name_col]] = iots[[i]][[measure]]
+    # If a measure has only one column, the naming of that column is included.
+    # Otherwise, the naming of the original columns is incorporated
+    # into the new column names
+    if (!is.null(iots[[i]][[measure]])){
+    if (ncol(iots[[i]][[measure]]) == 1){
+      # Find year of data and make column name
+      year = iots[[i]]$year 
+      name_col <- paste(measure, toString(year), sep = "")
+      # Add data to list
+      df_list[[name_col]] = iots[[i]][[measure]]  
+    }
+    
+    if (ncol(iots[[i]][[measure]]) > 1){
+      # Check whether column names are given to data.
+      # If not, create names with column position
+      year = iots[[i]]$year
+      if (is.null(colnames(iots[[i]][[measure]]))){
+        for (j in 1:ncol(iots[[i]][[measure]])){
+          name_col <- paste(measure,"_", toString(j) , toString(year), sep = "")
+          df_list[[name_col]] = iots[[i]][[measure]][,j]
+        }
+      }
+      # Otherwise, create names using the given column names
+      else{
+        colname_vec = colnames(iots[[i]][[measure]]) # Find column names
+        colname_vec[is.na(colname_vec)] = which(is.na(colname_vec)) # Replace NA values
+        colname_vec[is.nan(colname_vec)] = which(is.nan(colname_vec)) # Replace NaN
+        colname_vec <- make.names(colnames(iots[[i]][[measure]]), unique = TRUE) # Make sure names are unique
+      
+        for (j in 1:ncol(iots[[i]][[measure]])){
+          name_col <- paste(measure,"_", colname_vec[j] , toString(year), sep = "")  
+          df_list[[name_col]] = iots[[i]][[measure]][,j]
+        }
+      }
+    }
   }
   }
   
+  # Combine list into a dataframe
   df <- do.call(cbind.data.frame, df_list)
   
   if (long == TRUE){
@@ -84,4 +126,5 @@ export_dataframe <- function(measures, iots, long = FALSE){
     df$year <- as.numeric(levels(df$year))
     }
   return(df)
+}
 }

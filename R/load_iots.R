@@ -48,7 +48,12 @@ load_iots <- function(version_database, years = 8, directory = get("dir_data", e
   if (length(years) == 1){
   if (years == c(8)){
     dir_file = paste(directory, "/", version_database, "/" , version_database, "years.rds", sep = "")
-    years <- readRDS(dir_file)
+    if (tolower(substr(dir_file, 1, 4)) == 'http' ){
+      years <- readRDS(gzcon(url(dir_file)))
+    }
+    else{
+      years <- readRDS(dir_file)
+    }
   }
   }
   

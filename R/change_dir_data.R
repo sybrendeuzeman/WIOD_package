@@ -1,4 +1,4 @@
-dir_data_online <- "X:/Projects/WIOD Stata Command/R program/Data"
+dir_data_online <- "http://www.wiod.org/Rdata"
 paramEnv <- new.env()
 assign('dir_data', dir_data_online, envir = paramEnv)
 assign('dir_data_online', dir_data_online, envir = paramEnv)

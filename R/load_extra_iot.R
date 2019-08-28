@@ -4,7 +4,7 @@
 # Maintained by: GGDC
 
 # First version: 1 June 2019
-# Current version: 11 June 2019
+# Current version: 28-August-2019
 
 #' @title
 #' Load extra data.
@@ -48,17 +48,34 @@ load_extra_iot <- function(iot, extra, directory = get("dir_data", envir = param
   
   dir_file = paste(directory, "\\", iot$version, "\\", iot$version,"_", extra, iot$year, ".rds", sep = "")
   
-  # Check for existence of file.
-  # A message will be given in both cases.
-  if (!(file.exists(dir_file))){
-    print(paste("Extra data ", extra,  " for year ", iot$year, " not found.", sep = ""))
-    return(iot)
+  if (tolower(substr(dir_file, 1, 4)) == 'http' ){
+    if (url.exists(dir_file)){
+      print(dir_file)
+      if (is.na(curl_fetch_memory(dir_file)$type)){
+      #Website redirect wrong URLs without proper code
+        iot[[extra]] <- readRDS(gzcon(url(dir_file)))
+        print(paste("Extra data ", extra,  " for year ", iot$year, " was found and added.", sep = ""))
+        return(iot)
+      }
+      else{
+        print(paste("Extra data ", extra,  " for year ", iot$year, " not found.", sep = ""))
+        return(iot)
+      }
+    }
   }
-  # If file exists, the extra data is added to the international input-output data.
-  if (file.exists(dir_file)){
-    iot[[extra]] <- readRDS(dir_file)
-    print(paste("Extra data ", extra,  " for year ", iot$year, " was found and added.", sep = ""))
-    return(iot)
+  else{
+    # Check for existence of file.
+    # A message will be given in both cases.
+    if (!(file.exists(dir_file))){
+      print(paste("Extra data ", extra,  " for year ", iot$year, " not found.", sep = ""))
+      return(iot)
+    }
+    # If file exists, the extra data is added to the international input-output data.
+    if (file.exists(dir_file)){
+      iot[[extra]] <- readRDS(dir_file)
+      print(paste("Extra data ", extra,  " for year ", iot$year, " was found and added.", sep = ""))
+      return(iot)
+    }
+    else return(iot)
   }
-  else return(iot)
 }
