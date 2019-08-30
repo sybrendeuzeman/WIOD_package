@@ -32,11 +32,15 @@
 #' df_bfs <- export_dataframe(c("bfs_mgt", "bfs_rd", "bfs_mar", "bfs_fab"), iots)
 #' 
 #' @export
-func_spec <- function(iot, bilateral = FALSE, functions = c("mgt", "rd", "mar", "fab")){
-  iot <- load_extra_iot(iot, "joeg2019")
+func_spec <- function(iot, bilateral = FALSE, aggregation = NULL , functions = c("mgt", "rd", "mar", "fab")){
+  
   # Check if extra data is there, otherwise return original IOT
   if (is.null(iot$joeg2019)){
-    return(iot)
+    print(paste("Necessary supplemental data for ", toString(iot$year), " not yet present.", sep = ""))
+    iot <- load_extra_iot(iot, "joeg2019")
+    if (is.null(iot$joeg2019)){
+      return(iot)
+    }
   }
   
   iot <- vax_functional(iot)
@@ -55,15 +59,30 @@ func_spec <- function(iot, bilateral = FALSE, functions = c("mgt", "rd", "mar", 
   }
 
   if (!bilateral){
-  for (fun in functions){
-      vax_fun = vax_list[[paste("vax_", fun, sep = "")]]
+    
+    if (is.null(aggregation)){
+      for (fun in functions){
+        vax_fun = vax_list[[paste("vax_", fun, sep = "")]]
         sh_fun_glob <- sum(vax_fun) / sum(vax_tot)
-      sh_fun <- rowSums(vax_fun) / rowSums(vax_tot)
-      fs <- sh_fun / sh_fun_glob
-      iot[[paste("fs_", fun, sep = "")]] <- fs
-      iot[[paste("fs_", fun, "_descr", sep = "")]] <- iot$countries
+        sh_fun <- rowSums(vax_fun) / rowSums(vax_tot)
+        fs <- sh_fun / sh_fun_glob
+        colnames(iot$countries) <- "country"
+        iot[[paste("fs_", fun, sep = "")]] <- fs
+        iot[[paste("fs_", fun, "_descr", sep = "")]] <- iot$countries
+      }
+      return(iot)
     }
-    return(iot)
+    
+    if (!is.null(aggregation)){
+      for (fun in functions){
+        vax_fun = vax_list[[paste("vax_", fun, sep = "")]]
+        sh_fun_glob <- sum(vax_fun) / sum(vax_tot)
+        sh_fun <- sum(vax_fun * aggregation) / sum(vax_tot * aggregation)
+        fs <- sh_fun / sh_fun_glob
+        iot[[paste("fs_", fun, "_aggr", sep = "")]] <- fs
+      }
+      return(iot)
+    }
   }
   if (bilateral){
     for (fun in functions){
@@ -72,18 +91,10 @@ func_spec <- function(iot, bilateral = FALSE, functions = c("mgt", "rd", "mar", 
       sh_fun <- vax_fun / vax_tot
       fs <- sweep(t(sh_fun), MARGIN = 1, sh_fun_glob, "/")
       fs <- t(fs)
-      
-      country_source <- c()
-      country_dest <- c()
-      measure <- c()
-      for (i in 1:ncol(fs)){
-        country_source <- c(country_source, iot$countries)
-        country_dest <- c(country_dest, rep(iot$countries[i], iot$c))
-        measure <- c(measure, fs[,i]) 
-      }
-      descr <- cbind(country_source, country_dest)
-      iot[[paste("bfs_", fun, sep = "")]] <- measure
-      iot[[paste("bfs_", fun, "_descr", sep = "")]] <- descr
+      colnames(fs) <- iot$countries
+      colnames(iot$countries) <- "country"
+      iot[[paste("bfs_", fun, sep = "")]] <- fs
+      iot[[paste("bfs_", fun, "_descr", sep = "")]] <- iot$countries
     }
     return(iot)
   }

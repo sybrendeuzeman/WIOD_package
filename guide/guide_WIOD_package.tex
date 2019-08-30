@@ -75,8 +75,6 @@
 	WIOD2016_0510 <- load_iots("WIOD2016", 2005:2010)
 	\end{Verbatim}
 	
-	\subsection{Make a Local Copy}
-	
 	\subsection{Load Extra Data}
 	In some cases, supplemental data needs to be downloaded. For example, the WIOD project database also consists of the Socio-Economic Accounts. This data can be added to the list via one of two functions \texttt{load\_extra\_iot} or \texttt{load\_extra\_iots}. To load the Socio-Economic Accounts (SEA) to the already loaded \texttt{iot}, you can use:
 	\begin{Verbatim}
@@ -87,6 +85,27 @@
 	WIOD2016 <- load_extra_iots(WIOD2016, "SEA")
 	\end{Verbatim}
 	
+	\subsection{Make a Local Copy}
+	To use a local copy instead of data from the internet, one can first download the data from the internet. To do so, first set the directory where to store the international input-output tables using the \texttt{change\_dir\_data} function. For example, if one wants to store the data \texttt{c:\\data\_wiod}, use
+	\begin{Verbatim}
+	change_dir_data("c:/data_wiod")
+	\end{Verbatim}
+	Then, to download a full dataset and its social-economic accounts, for example the WIOD 2016 data, one can use:
+	\begin{Verbatim}
+	download_iots("WIOD2016")
+	download_extra_iots("SEA", "WIOD2016")
+	\end{Verbatim}
+	After this, the downloaded data can be accessed in the same way as using the online data. To access the data again in a new session, use \texttt{change\_dir\_data} again. Even manually downloading is not necessary. After using \texttt{change\_dir\_data} is used, the load functions described in the sections above will, if possible, automatically download missing data. Hence,
+	\begin{Verbatim}
+	change_dir_data("c:/data_wiod")
+	WIOD2016 <- load_iots("WIOD2016")
+	\end{Verbatim}
+	is enough to download and load all the data from the World Input-Output Database 2016.
+	
+	If you do no longer want to use local data, you can simply change back to using internet data via:
+	\begin{Verbatim}
+	reset_dir_data()
+	\end{Verbatim}
 	
 	\section{Use International Input Output Tables}
 	We want to use International Input-Output Tables to generate new measures. For this, one can either build an own function as described in \ref{sec:ownfunction} or use one of the build-in functions. The functions are build to work with a single international input-output table. However, with the function \texttt{on\_iots} one can also use these functions on list of international input-output tables.

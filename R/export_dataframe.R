@@ -54,8 +54,9 @@ export_dataframe <- function(measures, iots, years = NULL, long = FALSE){
       # if description not in list, add one to counter 
       i = i + 1
     }
-    if (i >= length(iots)){
+    if (i > length(iots)){
       # Ends loop if all IOTs in list are checked.
+      descr = NULL
       notfound = F
     }
     if (i >= 1000){
@@ -77,15 +78,23 @@ export_dataframe <- function(measures, iots, years = NULL, long = FALSE){
     # Otherwise, the naming of the original columns is incorporated
     # into the new column names
     if (!is.null(iots[[i]][[measure]])){
-    if (ncol(iots[[i]][[measure]]) == 1){
-      # Find year of data and make column name
-      year = iots[[i]]$year 
-      name_col <- paste(measure, toString(year), sep = "")
-      # Add data to list
-      df_list[[name_col]] = iots[[i]][[measure]]  
-    }
+      dim_object <- dim(iots[[i]][[measure]])
+      if (is.null(dim_object)){
+        dim_col <- 1
+      }
+      else{
+        dim_col <- dim_object[2]
+      }
+      
+      if (dim_col == 1){
+        # Find year of data and make column name
+        year = iots[[i]]$year 
+        name_col <- paste(measure, toString(year), sep = "")
+        # Add data to list
+        df_list[[name_col]] = iots[[i]][[measure]]  
+      }
     
-    if (ncol(iots[[i]][[measure]]) > 1){
+    if (dim_col > 1){
       # Check whether column names are given to data.
       # If not, create names with column position
       year = iots[[i]]$year
@@ -108,6 +117,7 @@ export_dataframe <- function(measures, iots, years = NULL, long = FALSE){
         }
       }
     }
+    }
   }
   }
   
@@ -116,7 +126,12 @@ export_dataframe <- function(measures, iots, years = NULL, long = FALSE){
   
   if (long == TRUE){
     extra = list()
-    df_long <- gather(df, key = "variable", value = "value", -c(colnames(descr)[]))
+    if (!is.null(descr)){
+      df_long <- gather(df, key = "variable", value = "value", -c(colnames(descr)[]))
+    }
+    if (is.null(descr)){
+      df_long <- gather(df, key = "variable", value = "value")
+    }  
     extra$year <- substr(df_long$variable, start = (nchar(df_long$variable) - 3), stop = nchar(df_long$variable))
     extra$var <- substr(df_long$variable, start = 1, stop = nchar(df_long$variable) - 4)
     extra_df <-   do.call(cbind.data.frame, extra)
@@ -126,5 +141,5 @@ export_dataframe <- function(measures, iots, years = NULL, long = FALSE){
     df$year <- as.numeric(levels(df$year))
     }
   return(df)
-}
+
 }

@@ -4,7 +4,7 @@
 \alias{export_dataframe}
 \title{Make a dataframe from measures in IOTs}
 \usage{
-export_dataframe(measures, iots, long = FALSE)
+export_dataframe(measures, iots, years = NULL, long = FALSE)
 }
 \arguments{
 \item{measures:}{vector with the names of the measures.}

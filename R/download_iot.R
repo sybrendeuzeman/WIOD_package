@@ -1,5 +1,7 @@
 #' @importFrom curl curl_download
-#' @u
+#' @importFrom curl curl_fetch_memory
+#' @importFrom RCurl url.exists
+#' 
 #' @title Download Single IOT
 #' 
 #' @description Download a single IOT from the internet to your computer
@@ -10,7 +12,7 @@
 #' @export
 download_iot <- function(version, year, dir_data =  get("dir_data", envir = paramEnv), dir_data_online =  get("dir_data_online", envir = paramEnv)){
   # Create directory if not yet existent
-  dir.create(paste(dir_data, "/" , version, sep = ""), showWarnings = FALSE)
+  dir.create(paste(dir_data, "/" , version, sep = ""), showWarnings = FALSE, recursive = TRUE)
   
   # URL path to online data and local path where to store the data
   url <- paste(dir_data_online, "/", version, "/", version, toString(year), ".rds", sep = "")

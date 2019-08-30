@@ -38,23 +38,39 @@
 #' iots <- load_iots("WIOD2013", directory = "D:/Data")}
 #' 
 #' @export
-load_iots <- function(version_database, years = 8, directory = get("dir_data", envir = paramEnv)){
+load_iots <- function(version_database, years = NULL, directory = get("dir_data", envir = paramEnv)){
   # Function to load multiple International Input Output Tables within the same database into a list of input-output tables.
   # version: version of IOT
   # year: list or array of years
   # directory: Directory to the data. Version and year are managed. Default is loading via the internet.
 
   # In case of the default option for years (i.e. all years)
-  if (length(years) == 1){
-  if (years == c(8)){
+  if (is.null(years)){
     dir_file = paste(directory, "/", version_database, "/" , version_database, "years.rds", sep = "")
     if (tolower(substr(dir_file, 1, 4)) == 'http' ){
       years <- readRDS(gzcon(url(dir_file)))
     }
     else{
-      years <- readRDS(dir_file)
+      if (file.exists(dir_file)){
+        years <- readRDS(dir_file)  
+      }
+      else{
+        dir.create(paste(directory, "/" , version_database, sep = ""), showWarnings = FALSE, recursive = TRUE)
+        dir_data_online =  get("dir_data_online", envir = paramEnv)
+        years_url <- paste(dir_data_online, "/", version_database, "/", version_database, "years", ".rds", sep = "")
+        if (tolower(substr(years_url, 1, 4)) == 'http' ){
+          if (url.exists(years_url)){
+            if (is.na(curl_fetch_memory(years_url)$type)){
+              curl_download(years_url, dir_file)
+              years <- readRDS(gzcon(url(years_url)))
+            }
+            else{
+              print("Requested data could not be downloaded.")
+            }
+          }
+        }
+      }
     }
-  }
   }
   
   # Create actual list of international input output tables.

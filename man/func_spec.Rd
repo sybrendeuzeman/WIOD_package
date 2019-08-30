@@ -4,8 +4,8 @@
 \alias{func_spec}
 \title{Calculate Functional Specialization in Trade}
 \usage{
-func_spec(iot, bilateral = FALSE, functions = c("mgt", "rd", "mar",
-  "fab"))
+func_spec(iot, bilateral = FALSE, aggregation = NULL,
+  functions = c("mgt", "rd", "mar", "fab"))
 }
 \arguments{
 \item{iot:}{List with elements in a Input-Output Table (load via [load_iot()])}

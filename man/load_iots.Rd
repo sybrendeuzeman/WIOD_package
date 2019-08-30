@@ -4,7 +4,7 @@
 \alias{load_iots}
 \title{Load a time-series of International Input-Output Table.}
 \usage{
-load_iots(version_database, years = 8, directory = get("dir_data",
+load_iots(version_database, years = NULL, directory = get("dir_data",
   envir = paramEnv))
 }
 \arguments{

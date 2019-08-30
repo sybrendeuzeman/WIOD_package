@@ -2,7 +2,7 @@
 #' @export
 download_extra_iots <- function(extra, version, dir_data =  get("dir_data", envir = paramEnv), dir_data_online =  get("dir_data_online", envir = paramEnv)){
   # Make sure directory for data exists
-  dir.create(paste(dir_data, "/" , version, sep = ""), showWarnings = FALSE)
+  dir.create(paste(dir_data, "/" , version, sep = ""), showWarnings = FALSE, recursive = TRUE)
   
   # Find and load the years for which data is available
   years_url <- paste(dir_data_online, "/", version, "/", version, "years", ".rds", sep = "")
