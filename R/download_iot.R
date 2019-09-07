@@ -4,11 +4,24 @@
 #' 
 #' @title Download Single IOT
 #' 
-#' @description Download a single IOT from the internet to your computer
+#' @description Download a single IOT from the internet to your computer.
+#' download_iots will download a full dataset of IOTs.
 #' 
-#' @param dir_data: The path towards the local directory in which to store the data.
-#' @param dir_data_online: the path towards the internet source with data.Normally no need to change. 
+#' @param version: The international input-output database to be used
+#' @param year: The year for which to add supplemental data
+#' @param dir_data: The path towards the local directory in which to store the data. Most often using change_dir_data is preferred.
+#' @param dir_data_online: the path towards the internet source with data. Normally no need to change this. 
+#'
+#' @examples 
+#' \dontrun{
+#' Using change_dir_data
+#' change_dir_data("D:/Data")
+#' download_iot("WIOD2013", 2000)
 #' 
+#' Using dir_data param
+#' download_iot("WIOD2013", 2000, "D:/Data")
+#' }
+#'   
 #' @export
 download_iot <- function(version, year, dir_data =  get("dir_data", envir = paramEnv), dir_data_online =  get("dir_data_online", envir = paramEnv)){
   # Create directory if not yet existent

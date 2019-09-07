@@ -7,14 +7,15 @@
 change_dir_data(newdirectory)
 }
 \arguments{
-\item{newdirectory:}{the new directory from which to load the data}
+\item{newdirectory:}{the new directory from which to load the data and where to store data}
 }
 \description{
 The function changes the directory from where the data is loaded
 }
 \details{
-One can download the data using download_iots() and then use this function to change the directory with this function.
-Manual change of the data directory is also possible when loading data.
+Use this function to change the directory from where to load downloaded IOTs with load_iot or load_iots. 
+If a requested IOT is not yet downloaded, load_iot or load_iots will store the data first in this directory
+and load the newly downloaded local file.
 }
 \examples{
 \dontrun{change_dir_data("X://data")}

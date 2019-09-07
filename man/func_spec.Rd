@@ -12,6 +12,8 @@ func_spec(iot, bilateral = FALSE, aggregation = NULL,
 
 \item{bilateral:}{If TRUE a full set of bilateral functional specialization measures are calculated. Otherwise, only global.}
 
+\item{aggregation:}{A vector with ones in and zeros at place of country, ones will be aggregated.}
+
 \item{functions:}{Vector with functions that are used. !!TO DO: provide this together with data!!}
 }
 \value{

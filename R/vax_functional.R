@@ -16,7 +16,6 @@
 #' iot <- vax_functional(iot)
 #' 
 #' @import Matrix
-#' @export
 vax_functional <- function(iot){
   domestic_block <- matrix(1,iot$n, iot$n)
   select_domestic <- kronecker(diag(iot$c), domestic_block)

@@ -4,6 +4,7 @@
 #' 
 #' @param iot: List with elements in a Input-Output Table (load via [load_iot()])
 #' @param bilateral: If TRUE a full set of bilateral functional specialization measures are calculated. Otherwise, only global.
+#' @param aggregation: A vector with ones in and zeros at place of country, ones will be aggregated. 
 #' @param functions: Vector with functions that are used. !!TO DO: provide this together with data!!
 #' @return The input-output table list with either the bilateral FS measures (bfs_<function>) or global FS (fs_<function> measures
 #' and a description of the countries and industries (bfs_<function>_descr or fs_<function>) for use in [export_dataframe()].
@@ -43,15 +44,18 @@ func_spec <- function(iot, bilateral = FALSE, aggregation = NULL , functions = c
     }
   }
   
+  # Use vax_functional to get domestic VAX-D
   iot <- vax_functional(iot)
   vax_tot = matrix(0, iot$c , iot$c)
   vax_list = list()
+  
+  # Find VAX-D attributable to a certain function
   for (fun in functions){
     vax_fun <- sweep(iot$vax, MARGIN = 1, iot$joeg2019$lsh * iot$joeg2019[[paste("lsh_", fun, sep = "")]], '*')  
     
+    # Aggregate industries to the country-level
     ind_block <- matrix(1, 1, iot$n)
     aggr <- kronecker(diag(iot$c), ind_block)
-    
     vax_fun <- aggr %*% vax_fun
     vax_tot <- vax_tot + vax_fun
     
@@ -59,7 +63,6 @@ func_spec <- function(iot, bilateral = FALSE, aggregation = NULL , functions = c
   }
 
   if (!bilateral){
-    
     if (is.null(aggregation)){
       for (fun in functions){
         vax_fun = vax_list[[paste("vax_", fun, sep = "")]]

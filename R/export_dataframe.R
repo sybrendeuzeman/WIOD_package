@@ -12,6 +12,7 @@
 #' @description Function to extract measures from IOTs into a dataframe.
 #' @param measures: vector with the names of the measures.
 #' @param iots: list of input-output tables for which measures are already calculated.
+#' @param years: vector with years for which to export data
 #' @param long: Whether data is in long or wide format.
 #' 
 #' @details

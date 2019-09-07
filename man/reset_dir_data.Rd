@@ -7,5 +7,5 @@
 reset_dir_data()
 }
 \description{
-The function changes the directory from where the data is loaded back to the online data repository
+The function changes the directory from where the data is loaded back to the online data repository. Function does not take arguments.
 }

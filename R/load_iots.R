@@ -5,7 +5,7 @@
 # Maintained by GGDC
 
 # First version: 3 May 2019
-# Current Version: 11 June 2019
+# Current Version: 7 September 2019
 
 #' @title
 #' Load a time-series of International Input-Output Table.
@@ -15,16 +15,15 @@
 #'
 #' @param version: version of IOTs
 #' @param year: years for which you want the IOT. Default is all years.
-#' @param directory: directory to where the input-output tables are stored. 
+#' @param directory: directory to where the input-output tables are stored. Most often preferable to change using change_dir_data().
 #' 
 #' @details 
 #' Versions currently supported are WIOD2013 (World Input Output Database, version 2013), 
 #' WIOD2016 (World Input Output Database, version 2013) 
-#' and ICIOT2018 (Inter-Country Input Output Tables, version 2018).
+#' and ICIOT (Inter-Country Input Output Tables, version 2018).
 #' 
-#' Directory only needs to direct to the main storage directory, right version and year will be taken care of. 
-#' Default is loading via the internet. Users who use IOTs more often are advised to make a local copy.
-#' Local copy of online data can be made via download_iots()
+#' If directory is changed using change_dir_data, the function will download the requested data prior to loading.
+#' One can also download data using download_iots.
 #'  
 #' @examples
 #' \dontrun{Using online data:}
@@ -35,7 +34,8 @@
 #' 
 #' @examples
 #' \dontrun{Using local data:
-#' iots <- load_iots("WIOD2013", directory = "D:/Data")}
+#' change_dir_data("D:/Data")
+#' iots <- load_iots("WIOD2013")}
 #' 
 #' @export
 load_iots <- function(version_database, years = NULL, directory = get("dir_data", envir = paramEnv)){

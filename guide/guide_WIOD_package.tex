@@ -15,6 +15,16 @@
 	\section{Introduction}
 	
 	\section{Installing the WIOD R-package}
+	The package is not yet in the CRAN repository, so downloading the package is not yet as straight forward as other packages. The package can be downloaded from its GitHub repository using
+	\begin{Verbatim}	
+	url = "https://github.com/sybrendeuzeman/WIOD_package/raw/master/WIOD_0.1.tar.gz"
+	
+	install.packages(url, repos = NULL)
+	\end{Verbatim}
+	After this, one can load the package via:
+	\begin{Verbatim}
+	library(WIOD)
+	\end{Verbatim}
 	
 	\section{Load International Input Output Tables}
 	
@@ -179,7 +189,7 @@
 	\end{Verbatim}
 	\section{Make Your Own Functions}
 	\label{sec:ownfunction}
-	The strength of this package is that you only need to write the function, while the rest of the package takes care of managing the data. The functions can be written for a single input-output table, while the rest of the package makes it easy to obtain results for a whole database of input-output tables.
+	The strength of this package is that you only need to write the function that finds your measure for one specific IOT, while the rest of the package takes care of managing the dataset. The functions can be written for a single input-output table, while the rest of the package makes it easy to obtain results for a whole database of input-output tables.
 	
 	To aid in writing your own functions, we show the source code of the \texttt{gii} function:
 	\begin{Verbatim}
@@ -214,4 +224,52 @@
 	The results are stored to the list of the input-output table via  \texttt{iot\$gii <- result}. Next, we add a description via another function \texttt{iot\$gii\_descr <- countryindustry\_descr(iot, regions, industries)}. 
 	
 	\paragraph{Return the list} The list \texttt{iot} that contains now, next to the original content, the Leontief inverse, the GII calculations and its accompanying data description is returned as the result of the function call.
+	
+	\section{Build-In Functions}
+	\subsection{Measures}
+	
+	\subsubsection{coefficient}
+	
+	\subsubsection{fd\_total}
+	
+	\subsubsection{fvas}
+	
+	\subsubsection{func\_spec}
+	
+	\subsubsection{leontief}
+	
+	\subsubsection{gii}
+	
+	\subsection{Framework}
+	
+	\subsubsection{change\_dir\_data}
+		
+	\subsubsection{countrycat}
+	
+	\subsubsection{countryindustry\_descr}
+	
+	\subsubsection{download\_extra\_iot}
+	
+	\subsubsection{download\_extra\_iots}
+	
+	\subsubsection{download\_iot}
+	
+	\subsubsection{download\_iots}
+	
+	\subsubsection{export\_csv}
+	
+	\subsubsection{export\_dataframe}
+	
+	\subsubsection{load\_extra\_iot}
+	
+	\subsubsection{load\_extra\_iots}
+	
+	\subsubsection{load\_iot}
+	
+	\subsubsection{load\_iots}
+	
+	\subsubsection{on\_iots}
+	
+	\subsubsection{reset\_dir\_data}	
+	
 	\end{document}

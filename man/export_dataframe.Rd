@@ -11,6 +11,8 @@ export_dataframe(measures, iots, years = NULL, long = FALSE)
 
 \item{iots:}{list of input-output tables for which measures are already calculated.}
 
+\item{years:}{vector with years for which to export data}
+
 \item{long:}{Whether data is in long or wide format.}
 }
 \description{
