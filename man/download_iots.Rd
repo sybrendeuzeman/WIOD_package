@@ -4,8 +4,11 @@
 \alias{download_iots}
 \title{Download Timeseries of IOTs}
 \usage{
-download_iots(version, dir_data = get("dir_data", envir = paramEnv),
-  dir_data_online = get("dir_data_online", envir = paramEnv))
+download_iots(
+  version,
+  dir_data = get("dir_data", envir = paramEnv),
+  dir_data_online = get("dir_data_online", envir = paramEnv)
+)
 }
 \arguments{
 \item{version:}{The international input-output database to be used}

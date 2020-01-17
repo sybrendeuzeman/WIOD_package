@@ -4,8 +4,12 @@
 \alias{download_extra_iots}
 \title{Download Supplemental Data}
 \usage{
-download_extra_iots(extra, version, dir_data = get("dir_data", envir =
-  paramEnv), dir_data_online = get("dir_data_online", envir = paramEnv))
+download_extra_iots(
+  extra,
+  version,
+  dir_data = get("dir_data", envir = paramEnv),
+  dir_data_online = get("dir_data_online", envir = paramEnv)
+)
 }
 \arguments{
 \item{extra:}{The supplemental data to be downloaded}

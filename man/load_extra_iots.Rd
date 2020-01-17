@@ -4,8 +4,7 @@
 \alias{load_extra_iots}
 \title{Load extra data to multiple IOTs.}
 \usage{
-load_extra_iots(iots, extra, directory = get("dir_data", envir =
-  paramEnv))
+load_extra_iots(iots, extra, directory = get("dir_data", envir = paramEnv))
 }
 \arguments{
 \item{iots:}{List of Input-Output Tables (load via [load_iots()])}

@@ -4,8 +4,12 @@
 \alias{download_iot}
 \title{Download Single IOT}
 \usage{
-download_iot(version, year, dir_data = get("dir_data", envir = paramEnv),
-  dir_data_online = get("dir_data_online", envir = paramEnv))
+download_iot(
+  version,
+  year,
+  dir_data = get("dir_data", envir = paramEnv),
+  dir_data_online = get("dir_data_online", envir = paramEnv)
+)
 }
 \arguments{
 \item{version:}{The international input-output database to be used}

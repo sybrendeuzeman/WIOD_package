@@ -46,31 +46,7 @@ load_iots <- function(version_database, years = NULL, directory = get("dir_data"
 
   # In case of the default option for years (i.e. all years)
   if (is.null(years)){
-    dir_file = paste(directory, "/", version_database, "/" , version_database, "years.rds", sep = "")
-    if (tolower(substr(dir_file, 1, 4)) == 'http' ){
-      years <- readRDS(gzcon(url(dir_file)))
-    }
-    else{
-      if (file.exists(dir_file)){
-        years <- readRDS(dir_file)  
-      }
-      else{
-        dir.create(paste(directory, "/" , version_database, sep = ""), showWarnings = FALSE, recursive = TRUE)
-        dir_data_online =  get("dir_data_online", envir = paramEnv)
-        years_url <- paste(dir_data_online, "/", version_database, "/", version_database, "years", ".rds", sep = "")
-        if (tolower(substr(years_url, 1, 4)) == 'http' ){
-          if (url.exists(years_url)){
-            if (is.na(curl_fetch_memory(years_url)$type)){
-              curl_download(years_url, dir_file)
-              years <- readRDS(gzcon(url(years_url)))
-            }
-            else{
-              print("Requested data could not be downloaded.")
-            }
-          }
-        }
-      }
-    }
+    years <- load_years(version_database, directory = get("dir_data", envir = paramEnv))
   }
   
   # Create actual list of international input output tables.
