@@ -22,9 +22,7 @@ download_extra_iots <- function(extra, version, dir_data =  get("dir_data", envi
   # Make sure directory for data exists
   dir.create(paste(dir_data, "/" , version, sep = ""), showWarnings = FALSE, recursive = TRUE)
   
-  # Find and load the years for which data is available
-  years_url <- paste(dir_data_online, "/", version, "/", version, "years", ".rds", sep = "")
-  years <- readRDS(gzcon(url(years_url)))
+  years <- load_years(version)
   
   # Download extra data for all the years using download_extra_iot
   for (year in years){

@@ -10,47 +10,31 @@
 load_years <- function(version_database, directory = get("dir_data", envir = paramEnv)){
   # Function to load multiple International Input Output Tables within the same database into a list of input-output tables.
   # version: version of IOT
-  # year: list or array of years
   # directory: Directory to the data. Version and year are managed. Default is loading via the internet.
   
   # In case of the default option for years (i.e. all years)
   dir_years = paste(directory, "/", version_database, "/" , version_database, "years.rds", sep = "")
     
-  # Check whether directory is an internet-address (HTTP-protocol) of local
-  if (tolower(substr(dir_years, 1, 4)) == 'http' ){
-    http_dir = TRUE
-  }
-  else {
-    http_dir = FALSE
-  }
-    
   # Only difference here is for loading years
   # load_iot() will manage loading from the internet 
-  if ( http_dir ){
-    years <- readRDS(gzcon(url(dir_years)))
+  if ( is_dir_http(dir_years) ){
+    years <- load_Rd_internet(dir_years, message_failure = "File for years not found")
     return(years)
   }
     
-  if ( !http_dir ){
+  if ( !is_dir_http(dir_years) ){
     # Check whether years file already exists
-    if (file.exists(dir_file)){
-      years <- readRDS(dir_file)
+    if (file.exists(dir_years)){
+      years <- readRDS(dir_years)
       return(years)
     }
-    if (!file.exists(dir_file)){
+    if (!file.exists(dir_years)){
       dir.create(paste(directory, "/" , version_database, sep = ""), showWarnings = FALSE, recursive = TRUE)
       dir_data_online =  get("dir_data_online", envir = paramEnv)
-      years_url <- paste(dir_data_online, "/", version_database, "/", version_database, "years", ".rds", sep = "")
-        
-      if ( (url.exists(years_url) ) && ( is.na(curl_fetch_memory(years_url)$type)) ){
-        curl_download(years_url, dir_file)
-        years <- readRDS(gzcon(url(years_url)))
-        return(years)
-      }
-      else{
-        print("Requested data could not be downloaded.")
-        return(NULL)
-      }
+      url_years <- paste(dir_data_online, "/", version_database, "/", version_database, "years", ".rds", sep = "")
+      download_Rd(url_years, dir_years)
+      years <- load_Rd_internet(years_url)
+      return(years)
     }
   }
 }

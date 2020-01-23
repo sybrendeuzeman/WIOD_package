@@ -46,23 +46,16 @@ load_extra_iot <- function(iot, extra, directory = get("dir_data", envir = param
   
   # Version and Year data are collected from the International Input Output table.
   
-  dir_file = paste(directory, "\\", iot$version, "\\", iot$version,"_", extra, iot$year, ".rds", sep = "")
+  dir_file = paste(directory, "/", iot$version, "/", iot$version,"_", extra, iot$year, ".rds", sep = "")
   
-  if (tolower(substr(dir_file, 1, 4)) == 'http' ){
-    if (url.exists(dir_file)){
-      if (is.na(curl_fetch_memory(dir_file)$type)){
-      #Website redirect wrong URLs without proper code
-        iot[[extra]] <- readRDS(gzcon(url(dir_file)))
-        print(paste("Extra data ", extra,  " for year ", iot$year, " was found and added.", sep = ""))
-        return(iot)
-      }
-      else{
-        print(paste("Extra data ", extra,  " for year ", iot$year, " not found.", sep = ""))
-        return(iot)
-      }
-    }
+  if ( is_dir_http(dir_file) ){
+    message_success = paste("Extra data ", extra,  " for year ", iot$year, " was found and added.", sep = "")
+    message_failure = paste("Extra data ", extra,  " for year ", iot$year, " not found.", sep = "")
+    iot[[extra]] <- load_Rd_internet(dir_file, message_success = message_success, message_failure = message_failure )
+    return(iot)
   }
-  else{
+  
+  if ( !is_dir_http(dir_file) ){
     # Check for existence of file.
     # A message will be given in both cases.
     if (!(file.exists(dir_file))){

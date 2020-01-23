@@ -28,15 +28,5 @@ download_extra_iot <- function(extra, version, year, dir_data =  get("dir_data",
   url <- paste(dir_data_online,"/", version, "/", version,"_", extra, year, ".rds", sep = "")
   local <-  paste(dir_data, "/", version, "/", version,"_", extra, year, ".rds", sep = "")
   
-  # Some tests whether url points to actual data:
-  if (tolower(substr(url, 1, 4)) == 'http' ){
-    if (url.exists(url)){
-      if (is.na(curl_fetch_memory(url)$type)){
-        curl_download(url, local)
-      }
-      else{
-        print(paste("Extra data ", extra,  " for year ", year, " not found online.", sep = ""))
-      }
-    }
-  }
+  download_Rd(url, local)
 }
