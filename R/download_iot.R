@@ -31,16 +31,5 @@ download_iot <- function(version, year, dir_data =  get("dir_data", envir = para
   url <- paste(dir_data_online, "/", version, "/", version, toString(year), ".rds", sep = "")
   local <-  paste(dir_data, "/", version, "/", version, toString(year), ".rds", sep = "")
   
-  # Some tests whether url points to actual data:
-  #Website redirect wrong URLs without proper code. Ugly, so sorry if you have to debug because of this.
-  if (tolower(substr(url, 1, 4)) == 'http' ){
-    if (url.exists(url)){
-      if (is.na(curl_fetch_memory(url)$type)){
-        curl_download(url, local)
-      }
-      else{
-        print("Requested data could not be downloaded.")
-      }
-    }
-  }
+  download_Rd(url, local, message_failure = "Requested data could not be downloaded.")
 }

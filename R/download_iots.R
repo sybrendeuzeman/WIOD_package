@@ -27,10 +27,11 @@ download_iots <- function(version, dir_data =  get("dir_data", envir = paramEnv)
   
   # Load years for which data exists
   years_url <- paste(dir_data_online, "/", version, "/", version, "years", ".rds", sep = "")
-  years <- readRDS(gzcon(url(years_url)))
+
   # Store years for which data exists locally
   years_local <- paste(dir_data, "/", version, "/", version, "years", ".rds", sep = "")
-  curl_download(years_url, years_local)
+  download_Rd(years_url, years_local)
+  years <- load_Rd_internet(years_url)
   
   # Download the iots for all years
   for (year in years){

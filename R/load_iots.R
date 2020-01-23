@@ -46,7 +46,7 @@ load_iots <- function(version_database, years = NULL, directory = get("dir_data"
 
   # In case of the default option for years (i.e. all years)
   if (is.null(years)){
-    years <- load_years(version_database, directory = get("dir_data", envir = paramEnv))
+    years <- load_years(version_database, directory)
   }
   
   # Create actual list of international input output tables.
